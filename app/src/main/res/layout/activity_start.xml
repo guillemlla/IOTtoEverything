@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_container"
+    tools:context="pae.iot.processingcpp.StartActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/data_exported"
+            android:textSize="10sp"
+            android:text="Data Received"
+            android:layout_below="@+id/start_comm_btn"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/data_title"
+            android:textSize="10sp"
+            android:text="Decoded Data: "
+            android:textStyle="bold"
+            android:layout_alignBaseline="@+id/data_exported"
+            android:layout_alignBottom="@+id/data_exported"
+            android:layout_toStartOf="@+id/data_exported" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/id_exported"
+            android:textSize="10sp"
+            android:text="Device ID"
+            android:layout_alignBaseline="@+id/id_title"
+            android:layout_alignBottom="@+id/id_title"
+            android:layout_toEndOf="@+id/id_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/id_title"
+            android:textSize="10sp"
+            android:text="Decoded ID: "
+            android:textStyle="bold"
+            android:layout_below="@+id/data_title"
+            android:layout_alignStart="@+id/data_title" />
+
+        <Button
+            android:id="@+id/start_comm_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="START CAMERA" />
+
+
+</RelativeLayout>
