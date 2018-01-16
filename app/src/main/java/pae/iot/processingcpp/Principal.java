@@ -181,19 +181,15 @@ public class Principal extends AppCompatActivity {
         dialog.setTitle("Afegeix DispositiuPage");
 
         // set the custom dialog components - text, image and button
-        Button bttId = (Button) dialog.findViewById(R.id.bttDialogId);
-        final EditText dialogId = (EditText) dialog.findViewById(R.id.tvDialogId);
+        Button bttConfigure = (Button) dialog.findViewById(R.id.bttDialogId);
+
         Button bttFisic = (Button) dialog.findViewById(R.id.bttDiaglogFisic);
         final RelativeLayout dialogOptions = (RelativeLayout) dialog.findViewById(R.id.rlDialogOptions);
 
-        bttId.setOnClickListener(new View.OnClickListener() {
+        bttConfigure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(!items.containsKey(dialogId.toString())){
-
-                }
-
+                configurePic("5");
             }
         });
 
@@ -221,89 +217,54 @@ public class Principal extends AppCompatActivity {
                     if (resultCode == RESULT_OK) {
                         String finalResult = data.getStringExtra(Protocol.FINAL_STRING_IDENTIFIER);
                         //TODO Parse ID and Data separated
-                        String ID = finalResult.substring(0,15).replace("-","");
+                        Toast.makeText(getApplicationContext(), resultCode, Toast.LENGTH_SHORT).show();
+                        String IDBin = finalResult.substring(4,8);
+                        Integer
+                                id = Integer.parseInt(IDBin,2);
+                        String ID = Integer.toString(
+                                id);
                         String Data = finalResult.substring(16);
                         Log.d("debbug", finalResult);
 
                         Log.d("debbug", "ID: " + ID + "DATA: " + Data);
-                        ID = ID.replace("-","");
+                        //ID = ID.replace("-","");
 
                         String[] tempsTemp = Data.split(",");
+                        Item item;
 
-                        if(ID == "0"){
-                            //We have to assign a new ID to the device (Not created yet)
-                            AsyncGetNewID asyncNewId = new AsyncGetNewID(new AsyncGetNewID.onNewDataListener() {
+                        if(!items.containsKey(ID)){
+
+                            item = new Item("Item"+ID,ID,"null","0","0");
+                            items.put(ID,item);
+                            String[] parameters = {ID};
+                            /*AsyncGetDeviceParameters getDeviceParameters = new AsyncGetDeviceParameters(new AsyncGetDeviceParameters.onNewDataListener() {
                                 @Override
-                                public void onNewData(final String id) {
-                                    Item i = new Item("Item"+id,id,"null","0","0");
-                                    items.put(id,i);
-                                    final String finalID = id;
-                                    Thread idThread = new Thread(new Runnable() {
-                                        public void run() {
-                                            //int [][] raw_data_matrix_all= new int[4][6];
-                                            Log.d(Sound.SOUND_THREAD,"Installing Device");
-                                            int[]  data = new int[60];
-                                            int id = Integer.parseInt(finalID);
-                                            CalendarE c = new CalendarE();
-                                            data = SoundModulator.soundModulator.installDevice(id,c.getYear(),c.getMonth()
-                                                    ,c.getDay(),c.getDayOfWeek(),c.getHour(),c.getMin(),c.getSec());
+                                public void onNewData(List<AsyncGetDeviceParameters.DeviceParameters> llista) {
+                                    for(AsyncGetDeviceParameters.DeviceParameters d : llista){
+                                        items.get(d.getId()).setLatitude(d.getLatitude());
+                                        items.get(d.getId()).setLongitude(d.getLongitude());
+                                        items.get(d.getId()).setAlarm(d.getAlarm());
+                                        items.get(d.getId()).alarmSendToDevice();
+                                        items.get(d.getId()).setAlarm(d.getFutureAlarm());
 
-                                            int [] data_all= new int[105];
-                                            int [] aux = new int[4];
-                                            int [] aux2;
-                                            for(int i=0; i<15; i++){
-                                                for(int j=0; j<4;j++){
-                                                    aux[j]=data[i*4+j];
-                                                }
-                                                aux2 = SoundModulator.soundModulator.generateData(aux);
-                                                System.arraycopy(aux2, 0, data_all, i*7, 7);
-                                            }
-
-                                            int [] soundCommand= SoundModulator.soundModulator.generateData(Sound.CONFIG_PIC);
-
-                                            double[] generatedAudio = SoundModulator.soundModulator.dataToNoise(
-                                                    SoundModulator.soundModulator.mergeAll(data_all,soundCommand)
-                                            );
-
-                                            genTone(generatedAudio);
-                                            handler.post(new Runnable() {
-
-                                                public void run() {
-                                                    playSound();
-                                                }
-                                            });
-                                        }
-                                    });
-                                    idThread.start();
+                                    }
                                 }
                             });
-                            asyncNewId.execute();
+                            getDeviceParameters.execute(parameters);*/
+                            Atributs a = new Atributs(new CalendarE(),"12","12");
+                            item.addAtribute(a);
+                            recyclerView.destroyDrawingCache();
+                            recyclerView.setAdapter(itemAdapter);
+                            recyclerView.setLayoutManager(llm);
+                            itemAdapter.notifyItemInserted(items.size());
+                            itemAdapter.notifyDataSetChanged();
 
 
                         }else{
-                            if(!items.containsKey(ID)){
-
-                                Item i = new Item("Item"+ID,ID,"null","0","0");
-                                items.put(ID,i);
-                                String[] parameters = {ID};
-                                AsyncGetDeviceParameters getDeviceParameters = new AsyncGetDeviceParameters(new AsyncGetDeviceParameters.onNewDataListener() {
-                                    @Override
-                                    public void onNewData(List<AsyncGetDeviceParameters.DeviceParameters> llista) {
-                                        for(AsyncGetDeviceParameters.DeviceParameters d : llista){
-                                            items.get(d.getId()).setLatitude(d.getLatitude());
-                                            items.get(d.getId()).setLongitude(d.getLongitude());
-                                            items.get(d.getId()).setAlarm(d.getAlarm());
-                                            items.get(d.getId()).alarmSendToDevice();
-                                            items.get(d.getId()).setAlarm(d.getFutureAlarm());
-
-                                        }
-                                    }
-                                });
-                                getDeviceParameters.execute(parameters);
-
-                            }
+                            item = items.get(ID);
                         }
-                        String temps;
+                        //PARSE DATA
+                        /*String temps;
                         String temp;
                         ArrayList<Atributs> atributs = new ArrayList<>();
                         for(String s : tempsTemp){
@@ -316,7 +277,7 @@ public class Principal extends AppCompatActivity {
                             AsyncUpdateDeviceDB asyncUpdateDeviceDB = new AsyncUpdateDeviceDB();
                             asyncUpdateDeviceDB.sendAtrributes(ID,atributs);
                         }
-                        getLastTimeInfo();
+                        getLastTimeInfo();*/
 
                     }
                 }
@@ -467,5 +428,50 @@ public class Principal extends AppCompatActivity {
                 AudioTrack.MODE_STATIC);
         audioTrack.write(generatedSnd, 0, generatedSnd.length);
         audioTrack.play();
+    }
+
+    public void configurePic(String deviceId){
+
+        Item i = new Item("Item"+deviceId,deviceId,"null","0","0");
+        items.put(deviceId,i);
+        final String finalID = deviceId;
+        Thread idThread = new Thread(new Runnable() {
+            public void run() {
+                //int [][] raw_data_matrix_all= new int[4][6];
+                Log.d(Sound.SOUND_THREAD,"Installing Device");
+                int[]  data = new int[60];
+                int id = Integer.parseInt(finalID);
+                CalendarE c = new CalendarE();
+                data = SoundModulator.soundModulator.installDevice(id,c.getYear(),c.getMonth()
+                        ,c.getDay(),c.getDayOfWeek(),c.getHour(),c.getMin(),c.getSec());
+
+                int [] data_all= new int[105];
+                int [] aux = new int[4];
+                int [] aux2;
+                for(int i=0; i<15; i++){
+                    for(int j=0; j<4;j++){
+                        aux[j]=data[i*4+j];
+                    }
+                    aux2 = SoundModulator.soundModulator.generateData(aux);
+                    System.arraycopy(aux2, 0, data_all, i*7, 7);
+                }
+
+                int [] soundCommand= SoundModulator.soundModulator.generateData(Sound.CONFIG_PIC);
+
+                double[] generatedAudio = SoundModulator.soundModulator.dataToNoise(
+                        SoundModulator.soundModulator.mergeAll(data_all,soundCommand)
+                );
+
+                genTone(generatedAudio);
+                handler.post(new Runnable() {
+
+                    public void run() {
+                        playSound();
+                    }
+                });
+            }
+        });
+        idThread.start();
+
     }
 }

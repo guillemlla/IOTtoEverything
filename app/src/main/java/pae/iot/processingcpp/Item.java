@@ -142,16 +142,24 @@ public class Item {
     }
 
     public String getLastAtrib1() {
+        if(atributs.size()==0){
+            return "00";
+        }
         if(temp == null){
             return atributs.get(atributs.size()-1).getAtrib1();
         }
-        return temp;
+
+        return temp ;
     }
 
     public String getLastAtrib2() {
+        if(atributs.size()==0){
+            return "00";
+        }
         if(hum == null){
             return atributs.get(atributs.size()-1).getAtrib2();
         }
+
         return hum;
     }
 
