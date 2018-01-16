@@ -33,24 +33,6 @@
         android:text="Canviar posició" />
 
     <Button
-        android:id="@+id/bttImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bttLoc"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:text="Canviar Imatge" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bttImg"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/common_google_signin_btn_icon_dark" />
-
-    <Button
         android:id="@+id/bttSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

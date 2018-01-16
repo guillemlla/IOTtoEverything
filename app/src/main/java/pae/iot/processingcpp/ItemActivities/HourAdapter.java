@@ -23,6 +23,9 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.ViewHolder>{
 
     private List<HourItem> items;
     public static final int TIME_CLICK = 0;
+    public static final int CHANGE_DAY = 1;
+    public static final int ACTIVATE = 2;
+    public static final int DESACTIVATE = 3;
 
     public interface OnItemClickListener{
         void onItemClick(HourItem item,int IdItemClick);
@@ -95,14 +98,17 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.ViewHolder>{
         holder.dl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onItemClickListener.onItemClick(item,CHANGE_DAY);
                 if(item.getDies().contains("dl")){
                     item.desactiveDies("dl");
                     holder.dl.setBackgroundColor(holder.view.getResources().getColor(R.color.transparent));
                     holder.dl.setTextColor(holder.view.getResources().getColor(R.color.black));
+
                 }else{
                     item.activeDies("dl");
                     holder.dl.setBackgroundColor(holder.view.getResources().getColor(R.color.colorPrimaryDark));
                     holder.dl.setTextColor(holder.view.getResources().getColor(R.color.white));
+
                 }
             }
         });
@@ -110,14 +116,17 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.ViewHolder>{
         holder.dm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onItemClickListener.onItemClick(item,CHANGE_DAY);
                 if(item.getDies().contains("dm")){
                     item.desactiveDies("dm");
                     holder.dm.setBackgroundColor(holder.view.getResources().getColor(R.color.transparent));
                     holder.dm.setTextColor(holder.view.getResources().getColor(R.color.black));
+
                 }else{
                     item.activeDies("dm");
                     holder.dm.setBackgroundColor(holder.view.getResources().getColor(R.color.colorPrimaryDark));
                     holder.dm.setTextColor(holder.view.getResources().getColor(R.color.white));
+
                 }
             }
         });
@@ -125,14 +134,17 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.ViewHolder>{
         holder.dt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onItemClickListener.onItemClick(item,CHANGE_DAY);
                 if(item.getDies().contains("dt")){
                     item.desactiveDies("dt");
                     holder.dt.setBackgroundColor(holder.view.getResources().getColor(R.color.transparent));
                     holder.dt.setTextColor(holder.view.getResources().getColor(R.color.black));
+
                 }else{
                     item.activeDies("dt");
                     holder.dt.setBackgroundColor(holder.view.getResources().getColor(R.color.colorPrimaryDark));
                     holder.dt.setTextColor(holder.view.getResources().getColor(R.color.white));
+
                 }
             }
         });
@@ -140,14 +152,17 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.ViewHolder>{
         holder.dj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onItemClickListener.onItemClick(item,CHANGE_DAY);
                 if(item.getDies().contains("dj")){
                     item.desactiveDies("dj");
                     holder.dj.setBackgroundColor(holder.view.getResources().getColor(R.color.transparent));
                     holder.dj.setTextColor(holder.view.getResources().getColor(R.color.black));
+
                 }else{
                     item.activeDies("dj");
                     holder.dj.setBackgroundColor(holder.view.getResources().getColor(R.color.colorPrimaryDark));
                     holder.dj.setTextColor(holder.view.getResources().getColor(R.color.white));
+
                 }
             }
         });
@@ -155,14 +170,17 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.ViewHolder>{
         holder.dv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onItemClickListener.onItemClick(item,CHANGE_DAY);
                 if(item.getDies().contains("dv")){
                     item.desactiveDies("dv");
                     holder.dv.setBackgroundColor(holder.view.getResources().getColor(R.color.transparent));
                     holder.dv.setTextColor(holder.view.getResources().getColor(R.color.black));
+
                 }else{
                     item.activeDies("dv");
                     holder.dv.setBackgroundColor(holder.view.getResources().getColor(R.color.colorPrimaryDark));
                     holder.dv.setTextColor(holder.view.getResources().getColor(R.color.white));
+
                 }
             }
         });
@@ -170,14 +188,17 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.ViewHolder>{
         holder.ds.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onItemClickListener.onItemClick(item,CHANGE_DAY);
                 if(item.getDies().contains("ds")){
                     item.desactiveDies("ds");
                     holder.ds.setBackgroundColor(holder.view.getResources().getColor(R.color.transparent));
                     holder.ds.setTextColor(holder.view.getResources().getColor(R.color.black));
+
                 }else{
                     item.activeDies("ds");
                     holder.ds.setBackgroundColor(holder.view.getResources().getColor(R.color.colorPrimaryDark));
                     holder.ds.setTextColor(holder.view.getResources().getColor(R.color.white));
+
                 }
             }
         });
@@ -185,14 +206,28 @@ public class HourAdapter extends RecyclerView.Adapter<HourAdapter.ViewHolder>{
         holder.dg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                onItemClickListener.onItemClick(item,CHANGE_DAY);
                 if(item.getDies().contains("dg")){
                     item.desactiveDies("dg");
                     holder.dg.setBackgroundColor(holder.view.getResources().getColor(R.color.transparent));
                     holder.dg.setTextColor(holder.view.getResources().getColor(R.color.black));
+
                 }else{
                     item.activeDies("dg");
                     holder.dg.setBackgroundColor(holder.view.getResources().getColor(R.color.colorPrimaryDark));
                     holder.dg.setTextColor(holder.view.getResources().getColor(R.color.white));
+
+                }
+            }
+        });
+
+        holder.timeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    onItemClickListener.onItemClick(item,ACTIVATE);
+                }else{
+                    onItemClickListener.onItemClick(item,DESACTIVATE);
                 }
             }
         });

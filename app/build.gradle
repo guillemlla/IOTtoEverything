@@ -60,9 +60,6 @@ repositories {
     }
 }
 
-dependencies {
-    compile 'com.github.lecho:hellocharts-android:v1.5.8'
-}
 
 dependencies {
     compile 'com.makeramen:roundedimageview:2.3.0'

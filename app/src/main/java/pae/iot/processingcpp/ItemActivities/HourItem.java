@@ -1,5 +1,7 @@
 package pae.iot.processingcpp.ItemActivities;
 
+import android.widget.Button;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,6 +14,7 @@ public class HourItem {
     private Calendar calendar;
     private boolean bDl,bDm,bDt,bDv,bDj,bDs,bDg;
     private boolean isActive;
+
 
 
     public HourItem(Calendar calendar) {
@@ -110,6 +113,35 @@ public class HourItem {
             s+="dg,";
         }
         return s;
+    }
+
+    public int[] getArrayDies(){
+        int[] array= {0,0,0,0,0,0,0};
+
+        if(bDl){
+            array[0] = 1;
+        }
+        if(bDt){
+            array[1] = 1;
+        }
+        if(bDm){
+            array[2] = 1;
+        }
+        if(bDj){
+            array[3]=1;
+        }
+        if(bDv){
+            array[4] = 1;
+        }
+        if(bDs){
+            array[5]=1;
+        }
+        if(bDg){
+            array[6] =1;
+        }
+
+        return array;
+
     }
 
 }

@@ -65,8 +65,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             }
         });
 
-        holder.itemRefresh.setVisibility(View.INVISIBLE);
-        holder.itemRefresh.setClickable(false);
+
+        item.refreshDevice = holder.itemRefresh;
         holder.itemName.setText(item.getNom());
         holder.itemId.setText("ID: "+item.getId());
         holder.itemAtrib1.setText("Temperatura: "+item.getLastAtrib1()+"ºC");

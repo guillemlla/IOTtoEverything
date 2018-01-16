@@ -1,4 +1,5 @@
 package pae.iot.processingcpp.ItemActivities;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -42,8 +43,8 @@ import java.util.List;
 
 import pae.iot.processingcpp.*;
 
-public class Gps extends Fragment{// implements OnMapReadyCallback, LocationListener, GoogleMap.InfoWindowAdapter,
-        //GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class Gps extends Fragment implements OnMapReadyCallback, LocationListener, GoogleMap.InfoWindowAdapter,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private SupportMapFragment mSupportMapFragment;
@@ -58,25 +59,22 @@ public class Gps extends Fragment{// implements OnMapReadyCallback, LocationList
     private Location location;
     private Button button;
     private static Marker markers;
-    private static ArrayList<Marker> marks = new ArrayList<>();
 
     public Gps(){};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_gps, container, false);
-        //setRetainInstance(true);
-        //InitializeLocationManager(savedInstanceState);
+        InitializeLocationManager(savedInstanceState);
         return rootView;
     }
 
-    /*public static void LoadMarkers(){
+    public static void LoadMarkers(){
         mGoogleMap.clear();
-        for(int i = 0; i<Principal.items.size(); i++){
-            markers=  mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(Principal.items.get(Integer.toString(i)).getLatitude()),
-                    Double.parseDouble(Principal.items.get(Integer.toString(i)).getLongitude()))).title(Principal.items.get(Integer.toString(i)).getNom()));
+        for(int i = 1; i<=Principal.items.size(); i++){
+            markers=  mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(Principal.items.get(String.valueOf(i)).getLatitude()),
+                    Double.parseDouble(Principal.items.get(String.valueOf(i)).getLongitude()))).title(Principal.items.get(String.valueOf(i)).getNom()));
 
-            marks.add(i,markers);
         }
 
     }
@@ -143,11 +141,11 @@ public class Gps extends Fragment{// implements OnMapReadyCallback, LocationList
             latLng =new LatLng(lat, lon);
         }
 
-        for(int i = 0; i<Principal.items.size(); i++){
-            markers=  mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(Principal.items.get(Integer.toString(i)).getLatitude()),
-                    Double.parseDouble(Principal.items.get(Integer.toString(i)).getLongitude()))).title(Principal.items.get(Integer.toString(i)).getNom()));
+        for(int i = 1; i<=Principal.items.size(); i++){
 
-            marks.add(i,markers);
+            markers=  mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(Principal.items.get(String.valueOf(i)).getLatitude()),
+                    Double.parseDouble(Principal.items.get(String.valueOf(i)).getLongitude()))).title(Principal.items.get(String.valueOf(i)).getNom()));
+
         }
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
         mGoogleMap.setInfoWindowAdapter(this);
@@ -265,17 +263,17 @@ public class Gps extends Fragment{// implements OnMapReadyCallback, LocationList
         tvn.setText(Principal.itemclicked.getNom());
         int aa =0;
         tvn.setText(marker.getTitle());
-        for ( int i = 0; i< Principal.items.size(); i++){
-            if(Principal.items.get(Integer.toString(i)).getNom()== marker.getTitle()){
+        for ( int i = 1; i<=Principal.items.size(); i++){
+            if(Principal.items.get(String.valueOf(i)).getNom().equals(marker.getTitle())){
                 aa=i;
             }
         }
-        tvh.setText("Humitat: " +Principal.items.get(Integer.toString(aa)).getLastAtrib1()+"% ");
-        tvt.setText("Temperatura: " +Principal.items.get(Integer.toString(aa)).getLastAtrib2()+"º ");
+        tvh.setText("Humitat: " +Principal.items.get(String.valueOf(aa)).getLastAtrib1()+"% ");
+        tvt.setText("Temperatura: " +Principal.items.get(String.valueOf(aa)).getLastAtrib2()+"º ");
 
         return view;
 
-    }*/
+    }
 
 
 }

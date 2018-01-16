@@ -23,7 +23,7 @@ import pae.iot.processingcpp.*;
 public class Config extends Fragment {
 
     private EditText etNom;
-    private Button bttGuardar,bttImatge,bttLoc;
+    private Button bttGuardar,bttLoc;
     private View viewFragment;
     String lonS, latS;
     Bundle bundle;
@@ -34,7 +34,6 @@ public class Config extends Fragment {
         View v  = inflater.inflate(R.layout.fragment_config, container, false);
         etNom = (EditText) v.findViewById(R.id.eTNom);
         bttGuardar = (Button) v.findViewById(R.id.bttSave);
-        bttImatge = (Button) v.findViewById(R.id.bttImg);
         bttLoc = (Button) v.findViewById(R.id.bttLoc);
 
         if(savedInstanceState!=null){
@@ -53,7 +52,7 @@ public class Config extends Fragment {
             public void onClick(View v) {
                 Principal.itemclicked.setLongitude(Double.toString(Gps.lon));
                 Principal.itemclicked.setLatitude(Double.toString(Gps.lat));
-                //Gps.LoadMarkers();
+                Gps.LoadMarkers();
             }
         });
 

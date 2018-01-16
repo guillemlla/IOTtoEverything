@@ -61,7 +61,7 @@ public class CameraActivity extends AppCompatActivity implements JavaCameraView.
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         finalResultString = "";
         decodedID = "";
@@ -85,10 +85,8 @@ public class CameraActivity extends AppCompatActivity implements JavaCameraView.
         RecieverHelper.lightReciever.setRepeatFlashListener(new RecieverHelper.RepeatFlashListener() {
             @Override
             public void onRepeatRequest() {
-
                 activateFlash();
                 Log.d(Protocol.RECEIVER_TAG,"Repeated Flash");
-
             }
         });
 
@@ -145,13 +143,13 @@ public class CameraActivity extends AppCompatActivity implements JavaCameraView.
                     if(state == Protocol.WAITING_DATA){
                         Log.d(Protocol.STATE_TAG,"SENDING PACKET FLASH");
                         if(!frame.contains("-")){
-                        //    mJavaCameraView.setEffect(Camera.Parameters.FLASH_MODE_TORCH);
+                            //    mJavaCameraView.setEffect(Camera.Parameters.FLASH_MODE_TORCH);
 
                             finalResultString += frame;
                             //activateFlash();
                             mJavaCameraView.callOnClick();
                             //resultTextView.setText(frame);
-                        //    mJavaCameraView.setEffect(Camera.Parameters.FLASH_MODE_OFF);
+                            //    mJavaCameraView.setEffect(Camera.Parameters.FLASH_MODE_OFF);
 
                         }else{
                             //mJavaCameraView.setEffect(Camera.Parameters.FLASH_MODE_TORCH);
@@ -191,9 +189,6 @@ public class CameraActivity extends AppCompatActivity implements JavaCameraView.
                         //ackFlag=false;
                         Log.d(Protocol.RECEIVER_TAG,"Delete last packet");
                     }
-                    //Current Frame
-
-                    //finalResultTextView.setText(finalResultString);
                 }
 
                 @Override

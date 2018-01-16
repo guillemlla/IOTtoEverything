@@ -81,17 +81,18 @@ public class Principal extends AppCompatActivity {
                     Thread alarmThread = new Thread(new Runnable() {
                         public void run() {
                             Log.d(Sound.SOUND_THREAD,"Setting Alarm");
-                            String alarma = item.getAlarm();
+                            String alarma = item.getFutureAlarm();
                             String temps = alarma.split(" ")[0];
                             int hora = Integer.parseInt(temps.split(":")[0]);
                             int min = Integer.parseInt(temps.split(":")[1]);
-                            String diaSetmana = alarma.split(" ")[0];
-                            int dia = 0;
-                            for(int i = 0 ; dia<Item.diesSetmama.length;i++){
+                            String diaSetmana = alarma.split(" ")[1];
+                            int dia =0;
+                            for(int i = 0 ; i<Item.diesSetmama.length;i++){
                                 if(diaSetmana.equals(Item.diesSetmama[i])){
                                    dia = i;
                                 }
                             }
+
                             int[]  data = new int[60];
                             data = SoundModulator.soundModulator.setAlarm(hora,min,0,dia+1);
 
@@ -193,35 +194,6 @@ public class Principal extends AppCompatActivity {
 
                 }
 
-
-
-
-                /*Item i = new Item("Item0", "5","null",Double.toString(41.4013690), Double.toString(2.196325));
-                CalendarE c = new CalendarE();
-                c.setTime(2,3,4);
-                Atributs atributs = new Atributs(c,"40", "31");
-                i.addAtribute(atributs);
-                c = new CalendarE();
-                c.setTime(14,5,50);
-                atributs = new Atributs(c,"20", "40");
-
-                i.addAtribute(atributs);
-                c = new CalendarE();
-                c.setTime(5,2,30);
-                atributs = new Atributs(c,"70", "20");
-
-                i.addAtribute(atributs);
-                c = new CalendarE();
-                c.setTime(6,30,10);
-                atributs = new Atributs(c,"50", "10");
-
-                i.addAtribute(atributs);
-
-                AsyncUpdateDeviceDB asyncUpdateDeviceDB = new AsyncUpdateDeviceDB();
-                asyncUpdateDeviceDB.sendAtrributes(i.getId(),i.getAtributs());*/
-
-
-
             }
         });
 
@@ -249,7 +221,7 @@ public class Principal extends AppCompatActivity {
                     if (resultCode == RESULT_OK) {
                         String finalResult = data.getStringExtra(Protocol.FINAL_STRING_IDENTIFIER);
                         //TODO Parse ID and Data separated
-                        String ID = finalResult.substring(0,15);
+                        String ID = finalResult.substring(0,15).replace("-","");
                         String Data = finalResult.substring(16);
                         Log.d("debbug", finalResult);
 
@@ -393,9 +365,8 @@ public class Principal extends AppCompatActivity {
             s = s+item.getId()+",";
         }
         String[] params = {s};
-        asyncGetLastInfoAllDevices.execute(params);
+        //asyncGetLastInfoAllDevices.execute(params);
     }
-
 
     public HashMap<String,Item> inicialitzarItems(HashMap<String,Item> items){
 
@@ -439,7 +410,21 @@ public class Principal extends AppCompatActivity {
 
         return items;
 
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        for (Item i: this.items.values()) {
+            if(i.getFutureAlarm()!="") {
+                i.setRefreshVisibility(true);
+
+            }
+        }
+        getLastTimeInfo();
+        recyclerView.swapAdapter(itemAdapter,false);
+        recyclerView.setLayoutManager(llm);
+        itemAdapter.notifyItemChanged(0);
 
     }
 

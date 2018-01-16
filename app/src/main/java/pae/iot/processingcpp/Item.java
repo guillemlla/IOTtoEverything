@@ -19,7 +19,7 @@ public class Item {
     private String image;
     private String latitude,longitude;
     private String alarm,futureAlarm; //hh:mm dl-dt-dm-dj-dv-ds-dg
-    private ImageButton refreshDevice;
+    public ImageButton refreshDevice;
 
     private String temp,hum;
     private CalendarE c;
@@ -55,6 +55,10 @@ public class Item {
 
     }
 
+    public String getFutureAlarm() {
+        return futureAlarm;
+    }
+
     public void setRefreshDevice(ImageButton refreshDevice) {
         this.refreshDevice = refreshDevice;
     }
@@ -66,11 +70,11 @@ public class Item {
 
             for(int i = 0;i<diesSetmana.length;i++){
                 if(diesSetmana[i]==1){
-                    result += diesSetmana[i]+"-";
+                    result += this.diesSetmama[i]+"-";
                 }
             }
             if(result.lastIndexOf("-") == result.length()-1){
-                result = result.substring(0,result.length()-2);
+                result = result.substring(0,result.length()-1);
             }
             futureAlarm = result;
             return true;

@@ -26,7 +26,7 @@ public final class Protocol {
     public final static int FLASH_DATA_SEQ  = 2;
     public final static int FLASH_STOP_SEQ  = 3;
 
-    public final static String IP_SERVER = "10.0.100.202";
+    public final static String IP_SERVER = "10.192.247.27";
 
     public final static int ACTIVITY_INTENT = 0;
     public final static String FINAL_STRING_IDENTIFIER = "final_result";

@@ -190,8 +190,6 @@ public class Grafiques extends Fragment implements DatePickerDialog.OnDateSetLis
 
 
     }
-
-
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
         datetext.setText(Integer.toString(i2)+"-"+Integer.toString(i1+1)+"-"+Integer.toString(i));
