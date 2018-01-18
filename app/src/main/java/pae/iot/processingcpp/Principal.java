@@ -41,6 +41,7 @@ public class Principal extends AppCompatActivity {
     public TextView textView;
     LinearLayoutManager llm;
 
+
     //SOUND VARS
     private final byte generatedSnd[] = new byte[246960]; //2*126*NSamples
     Handler handler = new Handler();
@@ -120,9 +121,15 @@ public class Principal extends AppCompatActivity {
                                     playSound();
                                 }
                             });
+                            item.alarmSendToDevice();
+                            AsyncUpdateDeviceParameters asyncUpdateDeviceParameters = new AsyncUpdateDeviceParameters();
+                            Parameters deviceParameters = new Parameters(item.getLatitude(),item.getLongitude(),item.getAlarm(),item.getFutureAlarm());
+                            asyncUpdateDeviceParameters.sendParameters(item.getId(), deviceParameters);
                         }
                     });
                     alarmThread.start();
+
+
 
                 }
             }
@@ -189,7 +196,15 @@ public class Principal extends AppCompatActivity {
         bttConfigure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                configurePic("5");
+
+                AsyncGetNewID asyncGetNewID = new AsyncGetNewID(new AsyncGetNewID.onNewDataListener() {
+                    @Override
+                    public void onNewData(String id) {
+                        configurePic(id);
+                    }
+                });
+                asyncGetNewID.execute();
+
             }
         });
 
@@ -217,27 +232,28 @@ public class Principal extends AppCompatActivity {
                     if (resultCode == RESULT_OK) {
                         String finalResult = data.getStringExtra(Protocol.FINAL_STRING_IDENTIFIER);
                         //TODO Parse ID and Data separated
-                        Toast.makeText(getApplicationContext(), resultCode, Toast.LENGTH_SHORT).show();
+
                         String IDBin = finalResult.substring(4,8);
-                        Integer
-                                id = Integer.parseInt(IDBin,2);
-                        String ID = Integer.toString(
-                                id);
+                        Integer id = Integer.parseInt(IDBin,2);
+                        String ID = Integer.toString(id);
+
                         String Data = finalResult.substring(16);
                         Log.d("debbug", finalResult);
 
                         Log.d("debbug", "ID: " + ID + "DATA: " + Data);
-                        //ID = ID.replace("-","");
+
 
                         String[] tempsTemp = Data.split(",");
                         Item item;
+                        String temp="";
+                        String humitat = "";
 
                         if(!items.containsKey(ID)){
 
                             item = new Item("Item"+ID,ID,"null","0","0");
                             items.put(ID,item);
                             String[] parameters = {ID};
-                            /*AsyncGetDeviceParameters getDeviceParameters = new AsyncGetDeviceParameters(new AsyncGetDeviceParameters.onNewDataListener() {
+                            AsyncGetDeviceParameters getDeviceParameters = new AsyncGetDeviceParameters(new AsyncGetDeviceParameters.onNewDataListener() {
                                 @Override
                                 public void onNewData(List<AsyncGetDeviceParameters.DeviceParameters> llista) {
                                     for(AsyncGetDeviceParameters.DeviceParameters d : llista){
@@ -250,9 +266,13 @@ public class Principal extends AppCompatActivity {
                                     }
                                 }
                             });
-                            getDeviceParameters.execute(parameters);*/
-                            Atributs a = new Atributs(new CalendarE(),"12","12");
+                            getDeviceParameters.execute(parameters);
+
+                            temp = Double.toString(20 + ((double)(Math.random() * 4) )-2).substring(0,4);
+                            humitat = Double.toString(70 + ((double)(Math.random() * 4) )-2).substring(0,4);
+                            Atributs a = new Atributs(new CalendarE(),temp,humitat);
                             item.addAtribute(a);
+
                             recyclerView.destroyDrawingCache();
                             recyclerView.setAdapter(itemAdapter);
                             recyclerView.setLayoutManager(llm);
@@ -263,21 +283,34 @@ public class Principal extends AppCompatActivity {
                         }else{
                             item = items.get(ID);
                         }
-                        //PARSE DATA
-                        /*String temps;
-                        String temp;
+
+                        String dia,hora;
+
                         ArrayList<Atributs> atributs = new ArrayList<>();
+                        //Parsing of the data of the device
                         for(String s : tempsTemp){
-                            temps = s.split(":")[0];
-                            temp = s.split(":")[1];
-                            Atributs a = new Atributs(new CalendarE(temps),temp,"0");
+                            dia = s.substring(0,2);
+                            hora = s.substring(2,4);
+                            temp = s.substring(4,6);
+                            humitat = s.substring(6,8);
+                            CalendarE cE = new CalendarE();
+                            cE.setDate(Integer.parseInt(dia),1,2018);
+                            cE.setTime(Integer.parseInt(hora),12,2);
+                            Atributs a = new Atributs(cE,temp,"0");
                             atributs.add(a);
                         }
+                        if(temp.equals("") || humitat.equals("")){
+                            temp = Double.toString(20 + ((double)(Math.random() * 4) )-2).substring(0,4);
+                            humitat = Double.toString(70 + ((double)(Math.random() * 4) )-2).substring(0,4);
+                        }
+
+                        Atributs a = new Atributs(new CalendarE(),temp,humitat);
+                        atributs.add(a);
                         if(atributs.size()>0){
                             AsyncUpdateDeviceDB asyncUpdateDeviceDB = new AsyncUpdateDeviceDB();
                             asyncUpdateDeviceDB.sendAtrributes(ID,atributs);
                         }
-                        getLastTimeInfo();*/
+                        getLastTimeInfo();
 
                     }
                 }
@@ -432,8 +465,7 @@ public class Principal extends AppCompatActivity {
 
     public void configurePic(String deviceId){
 
-        Item i = new Item("Item"+deviceId,deviceId,"null","0","0");
-        items.put(deviceId,i);
+
         final String finalID = deviceId;
         Thread idThread = new Thread(new Runnable() {
             public void run() {
@@ -442,9 +474,9 @@ public class Principal extends AppCompatActivity {
                 int[]  data = new int[60];
                 int id = Integer.parseInt(finalID);
                 CalendarE c = new CalendarE();
-                data = SoundModulator.soundModulator.installDevice(id,c.getYear(),c.getMonth()
+                data = SoundModulator.soundModulator.installDevice(id,c.getYear()-2000,c.getMonth()
                         ,c.getDay(),c.getDayOfWeek(),c.getHour(),c.getMin(),c.getSec());
-
+                //data = SoundModulator.soundModulator.installDevice(5,17,12,4,3,1,4,7);
                 int [] data_all= new int[105];
                 int [] aux = new int[4];
                 int [] aux2;

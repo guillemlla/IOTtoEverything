@@ -1,36 +1,32 @@
 package pae.iot.processingcpp.DataFromInternet;
 
 import android.os.AsyncTask;
-import android.util.JsonReader;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import pae.iot.processingcpp.CustomStructures.*;
-
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import  pae.iot.processingcpp.CustomStructures.*;
+
+import pae.iot.processingcpp.CustomStructures.Atributs;
+import pae.iot.processingcpp.CustomStructures.Parameters;
+import pae.iot.processingcpp.CustomStructures.Protocol;
 
 /**
- * Created by guillemllados on 23/11/17.
+ * Created by guillemllados on 18/1/18.
  */
 
-public class AsyncUpdateDeviceDB extends AsyncTask<String,String,String> {
+public class AsyncUpdateDeviceParameters extends AsyncTask<String,String,String> {
 
     private static final String IP = Protocol.IP_SERVER;
     private List<Atributs> atributs;
-
 
 
 
@@ -44,7 +40,7 @@ public class AsyncUpdateDeviceDB extends AsyncTask<String,String,String> {
         BufferedReader reader;
         try {
             //Create connection
-            String Surl = "https://"+ IP+"/updateDb.php";
+            String Surl = "https://"+ IP+"/updateDeviceParameters.php";
 
             url = new URL(Surl);
             connection = (HttpURLConnection) url.openConnection();
@@ -104,26 +100,26 @@ public class AsyncUpdateDeviceDB extends AsyncTask<String,String,String> {
 
     }
 
-    public void sendAtrributes(String id,List<Atributs> atributs){
+    public void sendParameters(String id, Parameters deviceParameters){
 
         JSONArray jsonArray = new JSONArray();
 
         try{
-            for (Atributs atribut: atributs){
 
-                JSONObject object = new JSONObject();
+            JSONObject object = new JSONObject();
 
-                object.put("Device_ID",id);
-                object.put("Temperature",atribut.getAtrib1());
-                object.put("Humidity",atribut.getAtrib2());
-                object.put("Calendar",atribut.getDate().toStringSQL());
+            object.put("id",id);
+            object.put("latitude",deviceParameters.getLatitude());
+            object.put("longitude",deviceParameters.getLongitude());
+            object.put("alarm",deviceParameters.getAlarm());
+            object.put("futureAlarm",deviceParameters.getFutureAlarm());
 
-                jsonArray.put(object);
+            jsonArray.put(object);
 
-            }
+
 
             JSONObject dataToSendJson = new JSONObject();
-            dataToSendJson.put("Devices", jsonArray);
+            dataToSendJson.put("Parameters", jsonArray);
 
             this.execute(dataToSendJson.toString());
         }catch(Exception e){
@@ -136,3 +132,4 @@ public class AsyncUpdateDeviceDB extends AsyncTask<String,String,String> {
     }
 
 }
+

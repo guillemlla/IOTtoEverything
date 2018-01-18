@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import pae.iot.processingcpp.*;
+import pae.iot.processingcpp.CustomStructures.Parameters;
+import pae.iot.processingcpp.DataFromInternet.AsyncUpdateDeviceParameters;
 
 
 public class Config extends Fragment {
@@ -53,6 +55,10 @@ public class Config extends Fragment {
                 Principal.itemclicked.setLongitude(Double.toString(Gps.lon));
                 Principal.itemclicked.setLatitude(Double.toString(Gps.lat));
                 Gps.LoadMarkers();
+                AsyncUpdateDeviceParameters asyncUpdateDeviceParameters = new AsyncUpdateDeviceParameters();
+                Item item = Principal.itemclicked;
+                Parameters deviceParameters = new Parameters(item.getLatitude(),item.getLongitude(),item.getAlarm(),item.getFutureAlarm());
+                asyncUpdateDeviceParameters.sendParameters(item.getId(), deviceParameters);
             }
         });
 

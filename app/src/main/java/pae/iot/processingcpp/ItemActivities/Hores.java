@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TimePicker;
 
+import pae.iot.processingcpp.DataFromInternet.AsyncUpdateDeviceParameters;
 import pae.iot.processingcpp.Item;
 import pae.iot.processingcpp.Principal;
 import pae.iot.processingcpp.R;
+import pae.iot.processingcpp.CustomStructures.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,6 +57,12 @@ public class Hores extends Fragment {
                     i.setAlarm(Integer.toString(h.getData().get(Calendar.HOUR_OF_DAY)),Integer.toString(h.getData().get(Calendar.MINUTE)),h.getArrayDies());
                     bttConfirm.setVisibility(View.INVISIBLE);
                     bttConfirm.setClickable(false);
+
+                    AsyncUpdateDeviceParameters asyncUpdateDeviceParameters = new AsyncUpdateDeviceParameters();
+                    Item item = Principal.itemclicked;
+                    Parameters deviceParameters = new Parameters(item.getLatitude(),item.getLongitude(),item.getAlarm(),item.getFutureAlarm());
+                    asyncUpdateDeviceParameters.sendParameters(item.getId(), deviceParameters);
+
                 }else{
                     Principal.itemclicked.setAlarm("");
                     bttConfirm.setVisibility(View.INVISIBLE);

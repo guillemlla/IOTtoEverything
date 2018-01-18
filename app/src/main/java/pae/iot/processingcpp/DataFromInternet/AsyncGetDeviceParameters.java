@@ -43,7 +43,7 @@ public class AsyncGetDeviceParameters extends AsyncTask<String, String, String> 
         HttpURLConnection connection = null;
         try {
             //Create connection
-            String Surl = "http://" + IP + "/php/getDeviceParameters.php/?deviceId=" + strings[0];
+            String Surl = "https://" + IP + "/getDeviceParameters.php/?deviceId=" + strings[0];
 
             url = new URL(Surl);
             connection = (HttpURLConnection) url.openConnection();
@@ -83,12 +83,12 @@ public class AsyncGetDeviceParameters extends AsyncTask<String, String, String> 
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        if (!s.equals("-1")) {
+
 
 
 
             this.onNewDataListener.onNewData(atributs);
-        }
+
 
 
     }

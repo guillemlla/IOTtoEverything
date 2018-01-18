@@ -54,7 +54,7 @@ public class AsyncGetAtributesSingleDevice extends AsyncTask<String, String, Str
         HttpURLConnection connection = null;
         try {
             //Create connection
-            String Surl = "http://"+ IP+"/php/indexJSON.php?deviceId="+strings[0];
+            String Surl = "https://"+ IP+"/indexJSON.php?deviceId="+strings[0];
 
             url = new URL(Surl);
             connection = (HttpURLConnection)url.openConnection();

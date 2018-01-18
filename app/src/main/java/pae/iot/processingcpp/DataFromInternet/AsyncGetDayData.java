@@ -53,7 +53,7 @@ public class AsyncGetDayData extends AsyncTask<String, String, String> {
         HttpURLConnection connection = null;
         try {
 
-            String Surl = "http://"+ IP+"/php/getDayData.php/?deviceId="+strings[0]+"&day="+strings[1];
+            String Surl = "https://"+ IP+"/getDayData.php?deviceId="+strings[0]+"&day="+strings[1];
 
             url = new URL(Surl);
             connection = (HttpURLConnection)url.openConnection();

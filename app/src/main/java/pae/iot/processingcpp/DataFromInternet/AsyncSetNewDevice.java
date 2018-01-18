@@ -36,7 +36,7 @@ public class AsyncSetNewDevice extends AsyncTask<String, String, String> {
         HttpURLConnection connection = null;
         try {
             //http://localhost/php/newDevice.php?deviceId=10
-            String Surl = "http://" + IP + "/php/newDevice.php?deviceId="+strings[0];
+            String Surl = "https://" + IP + "/newDevice.php?deviceId="+strings[0];
 
             url = new URL(Surl);
             connection = (HttpURLConnection) url.openConnection();

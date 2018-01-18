@@ -46,7 +46,7 @@ public class AsyncGetLastInfoAllDevices extends AsyncTask<String, String, String
         i++;
         try {
             //http://localhost/php/getDataLastUpdateAll.php?deviceId=1,2
-            String Surl = "http://"+ IP+"/php/getDataLastUpdateAll.php/?deviceId="+strings[0];
+            String Surl = "https://"+ IP+"/getDataLastUpdateAll.php/?deviceId="+strings[0];
 
             url = new URL(Surl);
             connection = (HttpURLConnection)url.openConnection();

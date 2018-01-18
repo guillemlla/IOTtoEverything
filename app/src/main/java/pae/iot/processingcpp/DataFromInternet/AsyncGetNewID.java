@@ -37,7 +37,7 @@ public class AsyncGetNewID extends AsyncTask<String, String, String> {
         HttpURLConnection connection = null;
         try {
             //Create connection
-            String Surl = "http://" + IP + "/php/getnewid.php";
+            String Surl = "https://" + IP + "/getNewId.php";
 
             url = new URL(Surl);
             connection = (HttpURLConnection) url.openConnection();
@@ -56,10 +56,10 @@ public class AsyncGetNewID extends AsyncTask<String, String, String> {
                 response.append('\r');
             }
             rd.close();
-            id =  response.toString();
+            id =  response.toString().split(":")[0];
 
 
-            return strings[0];
+            return  id;
 
         } catch (Exception e) {
 
