@@ -267,9 +267,7 @@ public class Principal extends AppCompatActivity {
                                 }
                             });
                             getDeviceParameters.execute(parameters);
-
-                            temp = Double.toString(20 + ((double)(Math.random() * 4) )-2).substring(0,4);
-                            humitat = Double.toString(70 + ((double)(Math.random() * 4) )-2).substring(0,4);
+                            
                             Atributs a = new Atributs(new CalendarE(),temp,humitat);
                             item.addAtribute(a);
 
@@ -298,10 +296,6 @@ public class Principal extends AppCompatActivity {
                             cE.setTime(Integer.parseInt(hora),12,2);
                             Atributs a = new Atributs(cE,temp,"0");
                             atributs.add(a);
-                        }
-                        if(temp.equals("") || humitat.equals("")){
-                            temp = Double.toString(20 + ((double)(Math.random() * 4) )-2).substring(0,4);
-                            humitat = Double.toString(70 + ((double)(Math.random() * 4) )-2).substring(0,4);
                         }
 
                         Atributs a = new Atributs(new CalendarE(),temp,humitat);
